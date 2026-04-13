@@ -1,0 +1,23 @@
+artifact_path: /Users/luana.anjos/ws-luana/postech/tech-challenge/mlruns/1/models/m-c3309bd83a7948ff8aa00254406ad4bd/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.11
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+    skops_trusted_types: null
+mlflow_version: 3.11.1
+model_id: m-c3309bd83a7948ff8aa00254406ad4bd
+model_size_bytes: 58838
+model_uuid: m-c3309bd83a7948ff8aa00254406ad4bd
+prompts: null
+run_id: aabbebb605c14b7eb1ffe839ce879c22
+utc_time_created: '2026-04-13 23:05:50.454541'

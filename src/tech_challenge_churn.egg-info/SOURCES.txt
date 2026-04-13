@@ -1,0 +1,10 @@
+README.md
+pyproject.toml
+src/churn_stage1/__init__.py
+src/churn_stage1/stage1_baselines.py
+src/tech_challenge_churn.egg-info/PKG-INFO
+src/tech_challenge_churn.egg-info/SOURCES.txt
+src/tech_challenge_churn.egg-info/dependency_links.txt
+src/tech_challenge_churn.egg-info/requires.txt
+src/tech_challenge_churn.egg-info/top_level.txt
+tests/test_smoke.py

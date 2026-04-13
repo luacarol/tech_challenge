@@ -1,0 +1,92 @@
+Metadata-Version: 2.4
+Name: tech-challenge-churn
+Version: 0.1.0
+Summary: Tech Challenge Fase 1: EDA e baselines de churn com MLflow
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: pandas>=2.2.2
+Requires-Dist: numpy>=1.26.4
+Requires-Dist: openpyxl>=3.1.5
+Requires-Dist: scikit-learn>=1.5.0
+Requires-Dist: mlflow>=2.14.3
+Requires-Dist: jupyter>=1.0.0
+Requires-Dist: matplotlib>=3.9.0
+Requires-Dist: seaborn>=0.13.2
+Provides-Extra: dev
+Requires-Dist: pytest>=8.2.2; extra == "dev"
+Requires-Dist: ruff>=0.5.0; extra == "dev"
+
+# Tech Challenge - Fase 1 (Etapa 1)
+
+Starter para iniciar apenas a **Etapa 1**:
+- ML Canvas (guia em `docs/ml_canvas_template.md`)
+- EDA inicial
+- Baselines com `DummyClassifier` e `LogisticRegression`
+- Tracking de experimentos no MLflow
+
+## Estrutura
+
+- `src/churn_stage1/`: codigo da etapa 1
+- `data/`: dataset CSV (exemplo: `data/telco_churn.csv`)
+- `models/`: saidas de metricas e amostras de predicao
+- `notebooks/`: notebook inicial de EDA + baselines
+- `docs/`: templates e resumos
+- `tests/`: testes iniciais
+
+## Setup
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+pip install -e ".[dev]"
+```
+
+## Dataset recomendado (IBM Telco)
+
+Dataset:
+https://www.kaggle.com/datasets/yeanzc/telco-customer-churn-ibm-dataset
+
+Depois de baixar no Kaggle, coloque o arquivo em `data/`.
+Se vier em XLSX, mantenha como:
+
+`data/Telco_customer_churn.xlsx`
+
+Se vier em CSV, use:
+
+`data/WA_Fn-UseC_-Telco-Customer-Churn.csv`
+
+## Como rodar a Etapa 1 (script)
+
+1. Coloque o dataset CSV em `data/`.
+2. Rode:
+
+```bash
+python -m churn_stage1.stage1_baselines \
+  --data-path data/Telco_customer_churn.xlsx \
+  --target-col Churn \
+  --experiment-name tech_challenge_stage1
+```
+
+Resultados esperados:
+- `models/stage1_baselines_metrics.csv`
+- `docs/stage1_eda_summary.json`
+- execucoes no MLflow local (`mlruns/`)
+
+## Abrir MLflow UI
+
+```bash
+mlflow ui --port 5001
+```
+
+Depois abra `http://127.0.0.1:5001`.
+
+## Checklist da Etapa 1
+
+- [ ] ML Canvas preenchido
+- [ ] EDA com qualidade/distribuicao/readiness
+- [ ] Metricas tecnicas definidas (AUC-ROC, PR-AUC, F1)
+- [ ] Metrica de negocio definida (custo de churn evitado)
+- [ ] Baseline com DummyClassifier
+- [ ] Baseline com Regressao Logistica
+- [ ] Runs registrados no MLflow
