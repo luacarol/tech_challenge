@@ -6,6 +6,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+import os
+
 import mlflow
 import mlflow.sklearn
 import numpy as np
@@ -18,6 +20,10 @@ from sklearn.metrics import average_precision_score, f1_score, roc_auc_score
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+# Configura o MLflow Tracking URI a partir da variável de ambiente, se existir
+if "MLFLOW_TRACKING_URI" in os.environ:
+    mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
 
 
 def load_dataset(data_path: Path) -> pd.DataFrame:
