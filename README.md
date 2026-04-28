@@ -77,6 +77,53 @@ python -m churn_stage1.predict \
 
 Saida: `models/churn_predictions.csv` com `customer_id`, `churn_score` e `churn_pred` ordenados por risco.
 
+
+## CI/CD Pipeline Automático com MLflow na AWS
+
+### Passo a passo para uso do pipeline:
+
+1. **Suba uma instância EC2 (Ubuntu) na AWS**
+  - Libere as portas 22 (SSH) e 5000 (Custom TCP) no Security Group.
+  - Anote o IP público.
+
+2. **Acesse a instância via SSH:**
+  ```sh
+  ssh -i caminho/para/sua-chave.pem ubuntu@IP_DA_INSTANCIA
+  ```
+
+3. **Instale dependências e MLflow:**
+  ```sh
+  sudo apt update
+  sudo apt install python3-pip python3-venv sqlite3 -y
+  python3 -m venv mlflow-venv
+  source mlflow-venv/bin/activate
+  pip install --upgrade pip
+  pip install mlflow
+  mkdir -p ~/mlruns
+  chmod 777 ~/mlruns
+  ```
+
+4. **Rode o MLflow Tracking Server:**
+  ```sh
+  mlflow server \
+    --host 0.0.0.0 \
+    --port 5000 \
+    --backend-store-uri sqlite:///mlflow.db \
+    --default-artifact-root file:///home/ubuntu/mlruns \
+    --allowed-hosts '*' \
+    --cors-allowed-origins '*'
+  ```
+
+5. **Acesse o MLflow pelo navegador:**
+  - http://IP_DA_INSTANCIA:5000
+
+6. **Configure o GitHub Actions:**
+  - Adicione o valor de `MLFLOW_TRACKING_URI` como `http://IP_DA_INSTANCIA:5000` nas secrets do repositório.
+
+7. **Faça um commit/push para acionar o pipeline CI/CD.**
+  - O workflow irá rodar testes, treinar o modelo e registrar no MLflow da AWS.
+
+---
 ## Checklist da Etapa 1
 
 - [x] ML Canvas preenchido (docs/ml_canvas_template.md)
