@@ -1,0 +1,24 @@
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Test and tooling cache
+.pytest_cache/
+.ruff_cache/
+
+# Local experiment tracking artifacts
+mlflow.db
+mlruns/
+
+# Build/package metadata generated locally
+*.egg-info/
+
+# Local test-generated sample data
+data/churn_data_sample.csv
+
+# macOS
+.DS_Store
