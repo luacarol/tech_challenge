@@ -1,16 +1,16 @@
-# Etapa 1 - Definicoes
+# Etapa 1 - Definições
 
-## Metricas tecnicas
-- AUC-ROC: desempenho global em classificacao binaria.
+## Métricas técnicas
+- AUC-ROC: desempenho global em classificação binária.
 - PR-AUC: foco em qualidade na classe positiva (churn).
-- F1: equilibrio entre precision e recall no threshold escolhido.
+- F1: equilíbrio entre precision e recall no threshold escolhido.
 
-## Metrica de negocio (template)
-Use este calculo para discutir custo evitado:
+## Métrica de negócio (template)
+Use este cálculo para discutir custo evitado:
 
 `custo_evitar_churn = TP * valor_cliente_retido - FP * custo_contato - FN * custo_perda`
 
 Onde:
 - `TP`: clientes de churn previstos corretamente.
-- `FP`: clientes sem churn impactados por acao desnecessaria.
-- `FN`: churn nao identificado.
+- `FP`: clientes sem churn impactados por ação desnecessária.
+- `FN`: churn não identificado.
