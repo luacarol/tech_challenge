@@ -140,6 +140,7 @@ def run_stage1(
     experiment_name: str,
     test_size: float,
     random_state: int,
+    output_dir: Path = Path("."),
 ) -> tuple[pd.DataFrame, str]:
     df = load_dataset(data_path)
     df = clean_telco_like_dataset(df)
@@ -209,7 +210,7 @@ def run_stage1(
                     "y_proba": y_proba,
                 }
             ).head(50)
-            sample_file = Path("models") / f"{model_name}_pred_sample.csv"
+            sample_file = output_dir / "models" / f"{model_name}_pred_sample.csv"
             sample_file.parent.mkdir(parents=True, exist_ok=True)
             sample_pred.to_csv(sample_file, index=False)
             mlflow.log_artifact(sample_file)
@@ -226,7 +227,7 @@ def run_stage1(
             rows.append({"model": model_name, **metrics})
 
     metrics_df = pd.DataFrame(rows).sort_values(by="auc_roc", ascending=False)
-    out_file = Path("models") / "stage1_baselines_metrics.csv"
+    out_file = output_dir / "models" / "stage1_baselines_metrics.csv"
     out_file.parent.mkdir(parents=True, exist_ok=True)
     metrics_df.to_csv(out_file, index=False)
 
@@ -237,7 +238,7 @@ def run_stage1(
         "missing_by_column": df.isna().sum().to_dict(),
         "target_distribution": y.value_counts(normalize=True).to_dict(),
     }
-    eda_file = Path("docs") / "stage1_eda_summary.json"
+    eda_file = output_dir / "docs" / "stage1_eda_summary.json"
     eda_file.parent.mkdir(parents=True, exist_ok=True)
     eda_file.write_text(json.dumps(eda_summary, indent=2), encoding="utf-8")
 
@@ -256,6 +257,12 @@ def main() -> None:
     )
     parser.add_argument("--test-size", type=float, default=0.2)
     parser.add_argument("--random-state", type=int, default=42)
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=Path("."),
+        help="Diretorio raiz para salvar metricas e EDA (default: diretorio atual)",
+    )
     args = parser.parse_args()
 
     np.random.seed(args.random_state)
@@ -266,6 +273,7 @@ def main() -> None:
         experiment_name=args.experiment_name,
         test_size=args.test_size,
         random_state=args.random_state,
+        output_dir=args.output_dir,
     )
     print(result.to_string(index=False))
     print(f"\nMLflow run_id (logistic_regression): {run_id}")
